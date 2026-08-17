@@ -1,0 +1,48 @@
+name: Sync & Filter
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'   # 每3小时自动从上游同步一次
+  workflow_dispatch:        # 也可以手动触发：Actions → Sync & Filter → Run workflow
+  push:
+    branches: [builder]     # 改配置/脚本后立即重建
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/fmz200/wool_scripts.git
+          git fetch upstream main --depth=1
+          echo "upstream main: $(git rev-parse --short upstream/main)"
+
+      - name: Regenerate filtered branch
+        run: |
+          set -euxo pipefail
+          git config user.name "huaka1-bot"
+          git config user.email "huaka1-bot@users.noreply.github.com"
+          UPSTREAM_SHA=$(git rev-parse --short upstream/main)
+          # 从上游最新主干构建纯净树
+          git checkout --detach upstream/main
+          # 把 builder 分支的过滤工具放进工作树
+          git checkout builder -- filter/wool_filter.py filter/wool_filter_config.json
+          python3 filter/wool_filter.py
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes vs upstream"
+          else
+            git commit -m "chore: regenerate filtered module from upstream ${UPSTREAM_SHA}"
+          fi
+          git push origin HEAD:filtered --force
+
+      - name: Update mirror branch (pure upstream snapshot)
+        run: |
+          git push origin upstream/main:mirror --force

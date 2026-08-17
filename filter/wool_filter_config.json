@@ -1,0 +1,43 @@
+{
+  "targets": [
+    "Surge/module/blockAds.module"
+  ],
+  "sites": {
+    "bilibili": {
+      "comment": "B站整站规则在小火箭上不兼容（jq/http-response-jq + webview 引擎，上游 issue #157 作者亲口说小火箭不支持），所以整站过滤。",
+      "domains": [
+        ".bilibili.com",
+        ".biliapi.com",
+        ".bilibili.net",
+        ".biliapi.net",
+        ".hdslb.com",
+        ".biligame.com"
+      ],
+      "scripts": [
+        "bilibiliManga",
+        "bilibili.airborne",
+        "bilibili.request",
+        "bilibili.skin",
+        "bilibili.live",
+        "bilibili.json",
+        "bilibili.protobuf"
+      ],
+      "keywords": [
+        "哔哩哔哩"
+      ]
+    },
+    "jd": {
+      "comment": "京东（预置，默认关闭）。以后京东出问题，把 jd 加进 enabled 列表即可，不用改代码。",
+      "domains": [
+        ".jd.com",
+        ".360buy.com",
+        ".jdpay.com",
+        ".jdcloud.com"
+      ],
+      "scripts": []
+    }
+  },
+  "enabled": [
+    "bilibili"
+  ]
+}
