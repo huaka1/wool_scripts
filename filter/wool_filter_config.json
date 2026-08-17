@@ -27,17 +27,22 @@
       ]
     },
     "jd": {
-      "comment": "京东（预置，默认关闭）。以后京东出问题，把 jd 加进 enabled 列表即可，不用改代码。",
+      "comment": "京东：遇到问题把 jd 加进 enabled 列表即可，不用改代码。含360buyimg图片CDN（上游会清空商品图）。",
       "domains": [
         ".jd.com",
         ".360buy.com",
+        ".360buyimg.com",
         ".jdpay.com",
         ".jdcloud.com"
       ],
-      "scripts": []
+      "scripts": [],
+      "keywords": [
+        "京东"
+      ]
     }
   },
   "enabled": [
-    "bilibili"
+    "bilibili",
+    "jd"
   ]
 }
