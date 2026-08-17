@@ -41,8 +41,8 @@ jobs:
           else
             git commit -m "chore: regenerate filtered module from upstream ${UPSTREAM_SHA}"
           fi
-          git push origin HEAD:filtered --force
+          git push origin HEAD:refs/heads/filtered --force
 
       - name: Update mirror branch (pure upstream snapshot)
         run: |
-          git push origin upstream/main:mirror --force
+          git push origin refs/remotes/upstream/main:refs/heads/mirror --force
