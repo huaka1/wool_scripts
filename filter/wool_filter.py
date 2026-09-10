@@ -21,7 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = ROOT / "filter" / "wool_filter_config.json"
 
-CONTENT_SECTIONS = {"[Rule]", "[URL Rewrite]", "[Body Rewrite]", "[Map Local]", "[Script]"}
+CONTENT_SECTIONS = {"[Rule]", "[URL Rewrite]", "[Body Rewrite]", "[Map Local]", "[Header Rewrite]", "[Script]"}
 
 
 def load_config():
